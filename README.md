@@ -1,4 +1,7 @@
 # Harmonious Teacher
+
+> **Note**: This is a private research fork of [Harmonious Teacher](https://github.com/kinredon/Harmonious-Teacher) (CVPR 2023) by the original authors, used to track personal experiments prior to an official release. All credit for the method and original codebase belongs to the original authors. Licensed under Apache License 2.0, same as upstream (see [LICENSE](LICENSE)).
+
 This repository provides an implement for our CVPR2023 paper "[Harmonious Teacher for Cross-domain Object Detection](https://openaccess.thecvf.com/content/CVPR2023/papers/Deng_Harmonious_Teacher_for_Cross-Domain_Object_Detection_CVPR_2023_paper.pdf)" on Pytorch.
 
 <img src="./assets/ht.png">

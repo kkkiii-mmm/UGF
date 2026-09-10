@@ -1,0 +1,5 @@
+[2026-09-08 20:18:16] ===== [boreal_cosine] training -> /home/kimth/Harmonious-Teacher/cvpods/ht_boreal_gating_linear/outputs/cosine/boreal_cosine (seed=55408457, UNCERTAINTY_METHOD=cosine, extra_opts=none) =====
+[2026-09-09 01:03:17] ===== [boreal_cosine] DONE =====
+[2026-09-09 01:03:17] ===== [aihub_cosine] training -> /home/kimth/Harmonious-Teacher/cvpods/ht_aihub_gating_linear/outputs/cosine/aihub_cosine (seed=13233898, UNCERTAINTY_METHOD=cosine, extra_opts=MODEL.UGF.RELIABILITY_ENABLED False) =====
+[2026-09-09 16:25:39] ===== [aihub_cosine] RESUMING after reboot (from iter 30000) -> /home/kimth/Harmonious-Teacher/cvpods/ht_aihub_gating_linear/outputs/cosine/aihub_cosine =====
+[2026-09-09 18:06:09] ===== [aihub_cosine] DONE (resumed) =====

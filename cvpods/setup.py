@@ -173,7 +173,7 @@ if __name__ == "__main__":
             "seaborn",
             "pandas",
             "lvis",
-            "sklearn",
+            "scikit-learn",
         ],
         extras_require={
             "all": [

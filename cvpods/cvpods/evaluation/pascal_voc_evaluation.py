@@ -95,6 +95,8 @@ class PascalVOCDetectionEvaluator(DatasetEvaluator):
 
             aps = defaultdict(list)  # iou -> ap per class
             ap50 = {}
+            recall50 = {}
+            precision50 = {}
             for cls_id, cls_name in enumerate(self._class_names):
                 lines = predictions.get(cls_id, [""])
 
@@ -113,10 +115,34 @@ class PascalVOCDetectionEvaluator(DatasetEvaluator):
                     aps[thresh].append(ap * 100)
                     if thresh == 50:
                         ap50[cls_name] = ap * 100
+                        # `rec`/`prec` are cumulative curves over confidence-sorted
+                        # detections. Report the point that maximizes F1 rather
+                        # than the curve's last point (= using literally every
+                        # detection down to SCORE_THRESH_TEST, capped at
+                        # DETECTIONS_PER_IMAGE): with ~1 GT per image and up to
+                        # 100 detections/image allowed, the last point counts at
+                        # best 1 TP against up to 99 FP per image, crushing
+                        # precision regardless of how good the detector is.
+                        # Max-F1 is the standard choice (e.g. Ultralytics YOLO's
+                        # val.py) for a single representative operating point.
+                        if len(rec):
+                            f1 = 2 * rec * prec / np.maximum(rec + prec, np.finfo(np.float64).eps)
+                            best_idx = np.argmax(f1)
+                            recall50[cls_name] = rec[best_idx] * 100
+                            precision50[cls_name] = prec[best_idx] * 100
+                        else:
+                            recall50[cls_name] = 0.0
+                            precision50[cls_name] = 0.0
 
         ret = OrderedDict()
         mAP = {iou: np.mean(x) for iou, x in aps.items()}
-        ret["bbox"] = {"AP": np.mean(list(mAP.values())), "AP50": mAP[50], "AP75": mAP[75]}
+        ret["bbox"] = {
+            "AP": np.mean(list(mAP.values())),
+            "AP50": mAP[50],
+            "AP75": mAP[75],
+            "Recall": np.mean(list(recall50.values())),
+            "Precision": np.mean(list(precision50.values())),
+        }
 
         small_table = create_small_table(ret["bbox"])
         logger.info("Evaluation results for bbox: \n" + small_table)
@@ -249,7 +275,10 @@ def voc_eval(detpath, annopath, imagesetfile, classname, ovthresh=0.5, use_07_me
 
     # first load gt
     # read list of images
-    with open(imagesetfile, "r") as f:
+    # `utf-8-sig` strips a leading BOM if the split file has one (`.strip()`
+    # alone doesn't, since BOM isn't whitespace), which would otherwise corrupt
+    # the very first image id and break annotation lookup for it.
+    with open(imagesetfile, "r", encoding="utf-8-sig") as f:
         lines = f.readlines()
     imagenames = [x.strip() for x in lines]
 

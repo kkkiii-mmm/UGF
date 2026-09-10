@@ -17,6 +17,7 @@ from .kitti import KITTIDataset
 from .lvis import LVISDataset
 from .objects365 import Objects365Dataset
 from .sim10k import Sim10kDataset
+from .smoke import SmokeDataset
 from .torchvision_datasets import CIFAR10Dataset, STL10Datasets
 from .voc import VOCDataset
 from .widerface import WiderFaceDataset

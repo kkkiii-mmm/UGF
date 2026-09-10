@@ -308,6 +308,39 @@ _PREDEFINED_SPLITS_CITY7CLS = {
 }
 PATH_ROUTES.register(_PREDEFINED_SPLITS_CITY7CLS, "CITY7CLS")
 
+# ==== Predefined splits for smoke-detection UDA domains ===========
+# Each dataset dir (under cvpods/data/<name>/) is VOC-format
+# (JPEGImages/Annotations/ImageSets/Main/{train,unlabeled_train,val}.txt) with
+# a single "smoke" class; `train` is the labeled source domain (HPWREN+NEMO
+# fire-camera images, identical across domains) and `unlabeled_train`/`val`
+# are the unlabeled-train/labeled-val split of the target domain.
+
+_PREDEFINED_SPLITS_HPWRENNEMO2AIHUB = {
+    "dataset_type": "SmokeDataset",
+    "evaluator_type": {
+        "voc": "pascal_voc",
+    },
+    "voc": {
+        "hpwrennemo2aihub_train": ("hpwrennemo2aihub", "train"),
+        "hpwrennemo2aihub_unlabeled_train": ("hpwrennemo2aihub", "unlabeled_train"),
+        "hpwrennemo2aihub_val": ("hpwrennemo2aihub", "val"),
+    },
+}
+PATH_ROUTES.register(_PREDEFINED_SPLITS_HPWRENNEMO2AIHUB, "HPWRENNEMO2AIHUB")
+
+_PREDEFINED_SPLITS_HPWRENNEMO2BOREAL = {
+    "dataset_type": "SmokeDataset",
+    "evaluator_type": {
+        "voc": "pascal_voc",
+    },
+    "voc": {
+        "hpwrennemo2boreal_train": ("hpwrennemo2boreal", "train"),
+        "hpwrennemo2boreal_unlabeled_train": ("hpwrennemo2boreal", "unlabeled_train"),
+        "hpwrennemo2boreal_val": ("hpwrennemo2boreal", "val"),
+    },
+}
+PATH_ROUTES.register(_PREDEFINED_SPLITS_HPWRENNEMO2BOREAL, "HPWRENNEMO2BOREAL")
+
 
 # ==== Predefined splits for citypersons ===========
 

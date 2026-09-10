@@ -12,3 +12,30 @@
 .DS_Store
 ./analys*/*
 *.\#*
+
+# 실험 산출물 폴더 전체 제외
+/cvpods/ht_aihub_debug/
+/cvpods/ht_aihub_gating/
+/cvpods/ht_aihub_lossonly/
+/cvpods/ht_boreal_debug/
+/cvpods/ht_boreal_gating/
+/cvpods/ht_aihub_gating_linear/
+/cvpods/ht_boreal_lossonly/
+
+# ht_boreal_gating_linear: 소스코드 9개 파일만 남기고 체크포인트/로그/wandb 등 제외
+/cvpods/ht_boreal_gating_linear/*
+!/cvpods/ht_boreal_gating_linear/augmentations.py
+!/cvpods/ht_boreal_gating_linear/config.py
+!/cvpods/ht_boreal_gating_linear/dataset.py
+!/cvpods/ht_boreal_gating_linear/ema.py
+!/cvpods/ht_boreal_gating_linear/fcos.py
+!/cvpods/ht_boreal_gating_linear/losses.py
+!/cvpods/ht_boreal_gating_linear/net.py
+!/cvpods/ht_boreal_gating_linear/runner.py
+!/cvpods/ht_boreal_gating_linear/ugf.py
+
+# playground 내 실험 산출물만 제외 (나머지 playground는 원본 프레임워크 예제라 유지)
+/cvpods/playground/detection/voc/fcos/
+
+# 데이터셋 제외
+/cvpods/data/

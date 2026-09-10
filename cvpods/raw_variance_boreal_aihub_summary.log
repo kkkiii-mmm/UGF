@@ -1,0 +1,5 @@
+[2026-09-07 14:07:48] ===== [boreal_raw_variance] training -> /home/kimth/Harmonious-Teacher/cvpods/ht_boreal_gating_linear/outputs/raw_variance/boreal_raw_variance (seed=55408457, UNCERTAINTY_METHOD=raw_variance) =====
+[2026-09-07 18:52:09] ===== [boreal_raw_variance] DONE =====
+[2026-09-07 18:52:09] ===== [aihub_raw_variance] training -> /home/kimth/Harmonious-Teacher/cvpods/ht_aihub_gating_linear/outputs/raw_variance/aihub_raw_variance (seed=13233898, UNCERTAINTY_METHOD=raw_variance) =====
+[2026-09-07 18:52:17] ===== [aihub_raw_variance] (corrected relaunch, RELIABILITY_ENABLED=False) training -> /home/kimth/Harmonious-Teacher/cvpods/ht_aihub_gating_linear/outputs/raw_variance/aihub_raw_variance (seed=13233898, UNCERTAINTY_METHOD=raw_variance) =====
+[2026-09-07 23:19:45] ===== [aihub_raw_variance] DONE =====

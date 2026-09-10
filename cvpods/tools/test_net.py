@@ -123,6 +123,25 @@ def filter_by_iters(file_list, start_iter, end_iter):
     return [filename for keep, filename in zip(keep_list, file_list) if keep == 1]
 
 
+def log_infer_debug_stats(model, cfg, tag):
+    """
+    Optional hook: if the model exposes `get_and_reset_debug_infer_stats`
+    (added for per-FPN-level cls_score/quality/reg debugging), fetch and log it.
+    No-op for models that don't define this method.
+    """
+    module = model.module if isinstance(model, comm.DDP_TYPES) else model
+    if not hasattr(module, "get_and_reset_debug_infer_stats"):
+        return
+    text = module.get_and_reset_debug_infer_stats()
+    if text is None or not comm.is_main_process():
+        return
+    logger.info("\n[Infer debug stats] {}\n{}".format(tag, text))
+    debug_log_path = os.path.join(cfg.OUTPUT_DIR, "infer_debug.txt")
+    with open(debug_log_path, "a") as f:
+        f.write("[Infer debug stats] {} (weights={})\n{}\n\n".format(
+            tag, cfg.MODEL.WEIGHTS, text))
+
+
 def get_valid_files(args, cfg, logger):
 
     if "MODEL.WEIGHTS" in args.opts:
@@ -163,6 +182,7 @@ def main(args, config, build_model):
             res = runner_decrator(RUNNERS.get(cfg.TRAINER.NAME)).test_with_TTA(cfg, model)
         else:
             res = runner_decrator(RUNNERS.get(cfg.TRAINER.NAME)).test(cfg, model)
+        log_infer_debug_stats(model, cfg, "Teacher")
 
         if comm.is_main_process():
             verify_results(cfg, res)
@@ -175,6 +195,7 @@ def main(args, config, build_model):
             res = runner_decrator(RUNNERS.get(cfg.TRAINER.NAME)).test_with_TTA(cfg, model)
         else:
             res = runner_decrator(RUNNERS.get(cfg.TRAINER.NAME)).test(cfg, model)
+        log_infer_debug_stats(model, cfg, "Student")
 
         if comm.is_main_process():
             verify_results(cfg, res)

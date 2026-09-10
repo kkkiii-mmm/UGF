@@ -207,8 +207,7 @@ class SemiRunner(DefaultRunner):
             else:
                 logger.info(f'Evaluating: EMA, EMA will start at iter {self.ema_start}')
 
-        # Do evaluation after checkpointer, because then if it fails,
-        # we can use the saved checkpoint to debug.
+        # Do evaluation after checkpointer so the saved checkpoint remains available if evaluation fails.
 
         ret.append(hooks.EvalHook(cfg.TEST.EVAL_PERIOD, test_and_save_ema_results))
         ret.append(hooks.EvalHook(cfg.TEST.EVAL_PERIOD, test_and_save_results))
@@ -384,7 +383,6 @@ class SemiRunner(DefaultRunner):
             # Region Selection
             ratio = self.cfg.TRAINER.DISTILL.RATIO
             count_num = int(teacher_logits.size(0) * ratio)
-            # print("count_num: ", count_num)
             teacher_probs = teacher_logits.sigmoid()
 
             # harmony measure

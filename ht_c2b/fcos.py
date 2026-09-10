@@ -268,7 +268,6 @@ class FCOS(nn.Module):
         valid_idxs = gt_classes >= 0
         foreground_idxs = (gt_classes >= 0) & (gt_classes != self.num_classes)
         num_foreground = foreground_idxs.sum()
-        # print("num_foreground: ", num_foreground)
 
         gt_classes_target = torch.zeros_like(pred_class_logits)
         gt_classes_target[foreground_idxs, gt_classes[foreground_idxs]] = 1
